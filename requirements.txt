@@ -1,0 +1,10 @@
+numpy
+pandas
+python-dateutil
+pytz
+scikit-learn
+scipy
+six
+xlrd
+flask
+psycopg2

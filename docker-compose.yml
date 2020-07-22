@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+    web:
+        build: .
+        ports:
+            - "5000:5000"
+        volumes:
+            - .:/code
+        depends_on:
+            - db
+    db:
+        restart: always
+        image: postgres
+        container_name: demo-postgres #you can change this
+        environment:
+          - POSTGRES_USER=testuser
+          - POSTGRES_PASS=test
+          - POSTGRES_DB=cognitus
+          - POSTGRES_PORT=5432
+        ports:
+          - "5433:5433"
+        volumes:
+          - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
+  

@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 mx-auto">
+        <div class="card card-signin my-5 text-center">
+          <div class="card-body"  >
+            <h5 class="card-title text-center">Train and Predict</h5>
+            <form method="POST" id="form">
+					{% csrf_token %}
+              <div class="form-label-group">
+                <input name="inputtext" type="text" id="inputtext" class="form-control" value="{{text}}" autofocus>
+                <label for="inputtext">Text</label>
+              </div>
+
+              <div class="form-label-group">
+                <input name="inputlabel" type="text" id="inputlabel" class="form-control" value="{{label}}">
+                <label for="inputlabel">Label</label>
+              </div>
+
+              <div class="custom-control custom-checkbox mb-3">
+              </div>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Send</button>
+              <hr class="my-4">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+{% endblock %}

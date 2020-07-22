@@ -1,0 +1,52 @@
+version: '3.7'
+services:
+  db:
+    restart: always
+    image: postgres
+    container_name: demo-postgres #you can change this
+    environment:
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASS=test
+      - POSTGRES_DB=cognitus
+      - POSTGRES_PORT=5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  web:
+    image: Cognitus
+    restart: always
+    build:
+      context: ./source
+      dockerfile: Dockerfile
+    command: gunicorn source.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/home/source/web/staticfiles
+      - media_volume:/home/source/web/mediafiles
+      - .:/app
+    depends_on:
+      - db
+  nginx:
+    restart: always
+    build: ./nginx
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static_volume:/home/source/web/staticfiles
+      - media_volume:/home/source/web/mediafiles
+    ports:
+      - 80:80
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+
+
+#networks:
+#  elasticnetwork:
+#    driver: bridge
+#  kibananet:
+#    driver: bridge
+
